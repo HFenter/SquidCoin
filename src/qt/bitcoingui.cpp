@@ -75,7 +75,7 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     rpcConsole(0)
 {
     resize(850, 550);
-    setWindowTitle(tr("JKC") + " - " + tr("Wallet"));
+    setWindowTitle(tr("SquidCoin") + " - " + tr("Wallet"));
 #ifndef Q_WS_MAC
     qApp->setWindowIcon(QIcon(":icons/bitcoin"));
     setWindowIcon(QIcon(":icons/bitcoin"));
@@ -228,17 +228,17 @@ void BitcoinGUI::createActions()
     tabGroup->addAction(receiveCoinsAction);
 
     sendCoinsAction = new QAction(QIcon(":/icons/send"), tr("&Send coins"), this);
-    sendCoinsAction->setToolTip(tr("Send coins to a JKC address"));
+    sendCoinsAction->setToolTip(tr("Send coins to a SquidCoin address"));
     sendCoinsAction->setCheckable(true);
     sendCoinsAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
     tabGroup->addAction(sendCoinsAction);
 
     signMessageAction = new QAction(QIcon(":/icons/edit"), tr("Sign &message..."), this);
-    signMessageAction->setToolTip(tr("Sign a message to prove you own a Bitcoin address"));
+    signMessageAction->setToolTip(tr("Sign a message to prove you own a SquidCoin address"));
     tabGroup->addAction(signMessageAction);
 
     verifyMessageAction = new QAction(QIcon(":/icons/transaction_0"), tr("&Verify message..."), this);
-    verifyMessageAction->setToolTip(tr("Verify a message to ensure it was signed with a specified Bitcoin address"));
+    verifyMessageAction->setToolTip(tr("Verify a message to ensure it was signed with a specified SquidCoin address"));
     tabGroup->addAction(verifyMessageAction);
 
 #ifdef FIRST_CLASS_MESSAGING
@@ -270,20 +270,20 @@ void BitcoinGUI::createActions()
 #endif
 
     quitAction = new QAction(QIcon(":/icons/quit"), tr("E&xit"), this);
-    quitAction->setToolTip(tr("Quit application"));
+    quitAction->setToolTip(tr("Quit SquidCoin"));
     quitAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
     quitAction->setMenuRole(QAction::QuitRole);
-    aboutAction = new QAction(QIcon(":/icons/bitcoin"), tr("&About JKC"), this);
-    aboutAction->setToolTip(tr("Show information about JKC"));
+    aboutAction = new QAction(QIcon(":/icons/bitcoin"), tr("&About SquidCoin"), this);
+    aboutAction->setToolTip(tr("Show information about SquidCoin"));
     aboutAction->setMenuRole(QAction::AboutRole);
     aboutQtAction = new QAction(tr("About &Qt"), this);
     aboutQtAction->setToolTip(tr("Show information about Qt"));
     aboutQtAction->setMenuRole(QAction::AboutQtRole);
     optionsAction = new QAction(QIcon(":/icons/options"), tr("&Options..."), this);
-    optionsAction->setToolTip(tr("Modify configuration options for JKC"));
+    optionsAction->setToolTip(tr("Modify configuration options for SquidCoin"));
     optionsAction->setMenuRole(QAction::PreferencesRole);
-    toggleHideAction = new QAction(QIcon(":/icons/bitcoin"), tr("Show/Hide &JKC"), this);
-    toggleHideAction->setToolTip(tr("Show or hide the JKC window"));
+    toggleHideAction = new QAction(QIcon(":/icons/bitcoin"), tr("Show/Hide &SquidCoin"), this);
+    toggleHideAction->setToolTip(tr("Show or hide the SquidCoin window"));
     exportAction = new QAction(QIcon(":/icons/export"), tr("&Export..."), this);
     exportAction->setToolTip(tr("Export the data in the current tab to a file"));
     encryptWalletAction = new QAction(QIcon(":/icons/lock_closed"), tr("&Encrypt Wallet..."), this);
@@ -376,7 +376,7 @@ void BitcoinGUI::setClientModel(ClientModel *clientModel)
 #endif
             if(trayIcon)
             {
-                trayIcon->setToolTip(tr("JKC client") + QString(" ") + tr("[testnet]"));
+                trayIcon->setToolTip(tr("SquidCoin client") + QString(" ") + tr("[testnet]"));
                 trayIcon->setIcon(QIcon(":/icons/toolbar_testnet"));
                 toggleHideAction->setIcon(QIcon(":/icons/toolbar_testnet"));
             }
@@ -440,7 +440,7 @@ void BitcoinGUI::createTrayIcon()
     trayIcon = new QSystemTrayIcon(this);
     trayIconMenu = new QMenu(this);
     trayIcon->setContextMenu(trayIconMenu);
-    trayIcon->setToolTip(tr("JKC client"));
+    trayIcon->setToolTip(tr("SquidCoin client"));
     trayIcon->setIcon(QIcon(":/icons/toolbar"));
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
             this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
@@ -477,7 +477,7 @@ void BitcoinGUI::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
     if(reason == QSystemTrayIcon::Trigger)
     {
-        // Click on system tray icon triggers "show/hide JKC"
+        // Click on system tray icon triggers "show/hide SQC"
         toggleHideAction->trigger();
     }
 }
@@ -511,7 +511,7 @@ void BitcoinGUI::setNumConnections(int count)
     default: icon = ":/icons/connect_4"; break;
     }
     labelConnectionsIcon->setPixmap(QIcon(icon).pixmap(STATUSBAR_ICONSIZE,STATUSBAR_ICONSIZE));
-    labelConnectionsIcon->setToolTip(tr("%n active connection(s) to JKC network", "", count));
+    labelConnectionsIcon->setToolTip(tr("%n active connection(s) to SquidCoin network", "", count));
 }
 
 void BitcoinGUI::setNumBlocks(int count, int nTotalBlocks)
@@ -627,12 +627,12 @@ void BitcoinGUI::setMining(bool mining, int hashrate)
     if (mining)
     {
         labelMiningIcon->setPixmap(QIcon(":/icons/mining_active").pixmap(STATUSBAR_ICONSIZE,STATUSBAR_ICONSIZE));
-        labelMiningIcon->setToolTip(tr("Mining Junkcoins at %1 hashes per second").arg(hashrate));
+        labelMiningIcon->setToolTip(tr("Mining SquidCoins at %1 hashes per second").arg(hashrate));
     }
     else
     {
         labelMiningIcon->setPixmap(QIcon(":/icons/mining_inactive").pixmap(STATUSBAR_ICONSIZE,STATUSBAR_ICONSIZE));
-        labelMiningIcon->setToolTip(tr("Not mining Junkcoins"));
+        labelMiningIcon->setToolTip(tr("Not mining SquidCoins"));
     }
 }
 
@@ -847,7 +847,7 @@ void BitcoinGUI::dropEvent(QDropEvent *event)
         if (nValidUrisFound)
             gotoSendCoinsPage();
         else
-            notificator->notify(Notificator::Warning, tr("URI handling"), tr("URI can not be parsed! This can be caused by an invalid JKC address or malformed URI parameters."));
+            notificator->notify(Notificator::Warning, tr("URI handling"), tr("URI can not be parsed! This can be caused by an invalid SquidCoin address or malformed URI parameters."));
     }
 
     event->acceptProposedAction();
@@ -862,7 +862,7 @@ void BitcoinGUI::handleURI(QString strURI)
         gotoSendCoinsPage();
     }
     else
-        notificator->notify(Notificator::Warning, tr("URI handling"), tr("URI can not be parsed! This can be caused by an invalid JKC address or malformed URI parameters."));
+        notificator->notify(Notificator::Warning, tr("URI handling"), tr("URI can not be parsed! This can be caused by an invalid SquidCoin address or malformed URI parameters."));
 }
 
 void BitcoinGUI::setEncryptionStatus(int status)

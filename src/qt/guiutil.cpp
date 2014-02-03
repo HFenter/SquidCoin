@@ -82,7 +82,7 @@ void setupAmountWidget(QLineEdit *widget, QWidget *parent)
 
 bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
 {
-    if(uri.scheme() != QString("junkcoin"))
+    if(uri.scheme() != QString("squidcoin"))
         return false;
 
     // check if the address is valid
@@ -138,13 +138,13 @@ bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
 
 bool parseBitcoinURI(QString uri, SendCoinsRecipient *out)
 {
-    // Convert junkcoin:// to junkcoin:
+    // Convert squidcoin:// to squidcoin:
     //
-    //    Cannot handle this later, because junkcoin:// will cause Qt to see the part after // as host,
+    //    Cannot handle this later, because squidcoin:// will cause Qt to see the part after // as host,
     //    which will lowercase it (and thus invalidate the address).
-    if(uri.startsWith("junkcoin://"))
+    if(uri.startsWith("squidcoin://"))
     {
-        uri.replace(0, 11, "junkcoin:");
+        uri.replace(0, 11, "squidcoin:");
     }
     QUrl uriInstance(uri);
     return parseBitcoinURI(uriInstance, out);
@@ -296,12 +296,12 @@ bool ToolTipToRichTextFilter::eventFilter(QObject *obj, QEvent *evt)
 #ifdef WIN32
 boost::filesystem::path static StartupShortcutPath()
 {
-    return GetSpecialFolderPath(CSIDL_STARTUP) / "Junkcoin.lnk";
+    return GetSpecialFolderPath(CSIDL_STARTUP) / "SquidCoin.lnk";
 }
 
 bool GetStartOnSystemStartup()
 {
-    // check for Junkcoin.lnk
+    // check for SquidCoin.lnk
     return boost::filesystem::exists(StartupShortcutPath());
 }
 
@@ -378,7 +378,7 @@ boost::filesystem::path static GetAutostartDir()
 
 boost::filesystem::path static GetAutostartFilePath()
 {
-    return GetAutostartDir() / "junkcoin.desktop";
+    return GetAutostartDir() / "squidcoin.desktop";
 }
 
 bool GetStartOnSystemStartup()
@@ -416,10 +416,10 @@ bool SetStartOnSystemStartup(bool fAutoStart)
         boost::filesystem::ofstream optionFile(GetAutostartFilePath(), std::ios_base::out|std::ios_base::trunc);
         if (!optionFile.good())
             return false;
-        // Write a junkcoin.desktop file to the autostart directory:
+        // Write a squidcoin.desktop file to the autostart directory:
         optionFile << "[Desktop Entry]\n";
         optionFile << "Type=Application\n";
-        optionFile << "Name=Junkcoin\n";
+        optionFile << "Name=SquidCoin\n";
         optionFile << "Exec=" << pszExePath << " -min\n";
         optionFile << "Terminal=false\n";
         optionFile << "Hidden=false\n";
@@ -440,10 +440,10 @@ bool SetStartOnSystemStartup(bool fAutoStart) { return false; }
 HelpMessageBox::HelpMessageBox(QWidget *parent) :
     QMessageBox(parent)
 {
-    header = tr("Junkcoin-Qt") + " " + tr("version") + " " +
+    header = tr("SquidCoin-Qt") + " " + tr("version") + " " +
         QString::fromStdString(FormatFullVersion()) + "\n\n" +
         tr("Usage:") + "\n" +
-        "  junkcoin-qt [" + tr("command-line options") + "]                     " + "\n";
+        "  squidcoin-qt [" + tr("command-line options") + "]                     " + "\n";
 
     coreOptions = QString::fromStdString(HelpMessage());
 
@@ -452,7 +452,7 @@ HelpMessageBox::HelpMessageBox(QWidget *parent) :
         "  -min                   " + tr("Start minimized") + "\n" +
         "  -splash                " + tr("Show splash screen on startup (default: 1)") + "\n";
 
-    setWindowTitle(tr("Junkcoin-Qt"));
+    setWindowTitle(tr("SquidCoin-Qt"));
     setTextFormat(Qt::PlainText);
     // setMinimumWidth is ignored for QMessageBox so put in nonbreaking spaces to make it wider.
     setText(header + QString(QChar(0x2003)).repeated(50));

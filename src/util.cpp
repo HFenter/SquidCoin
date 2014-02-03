@@ -937,7 +937,7 @@ static std::string FormatException(std::exception* pex, const char* pszThread)
     char pszModule[MAX_PATH] = "";
     GetModuleFileNameA(NULL, pszModule, sizeof(pszModule));
 #else
-    const char* pszModule = "junkcoin";
+    const char* pszModule = "squidcoin";
 #endif
     if (pex)
         return strprintf(
@@ -973,13 +973,13 @@ void PrintExceptionContinue(std::exception* pex, const char* pszThread)
 boost::filesystem::path GetDefaultDataDir()
 {
     namespace fs = boost::filesystem;
-    // Windows < Vista: C:\Documents and Settings\Username\Application Data\Junkcoin
-    // Windows >= Vista: C:\Users\Username\AppData\Roaming\Junkcoin
-    // Mac: ~/Library/Application Support/Junkcoin
-    // Unix: ~/.junkcoin
+    // Windows < Vista: C:\Documents and Settings\Username\Application Data\SquidCoin
+    // Windows >= Vista: C:\Users\Username\AppData\Roaming\SquidCoin
+    // Mac: ~/Library/Application Support/SquidCoin
+    // Unix: ~/.SquidCoin
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "Junkcoin";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "SquidCoin";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -991,10 +991,10 @@ boost::filesystem::path GetDefaultDataDir()
     // Mac
     pathRet /= "Library/Application Support";
     fs::create_directory(pathRet);
-    return pathRet / "Junkcoin";
+    return pathRet / "SquidCoin";
 #else
     // Unix
-    return pathRet / ".junkcoin";
+    return pathRet / ".squidcoin";
 #endif
 #endif
 }
@@ -1036,7 +1036,7 @@ const boost::filesystem::path &GetDataDir(bool fNetSpecific)
 
 boost::filesystem::path GetConfigFile()
 {
-    boost::filesystem::path pathConfigFile(GetArg("-conf", "junkcoin.conf"));
+    boost::filesystem::path pathConfigFile(GetArg("-conf", "squidcoin.conf"));
     if (!pathConfigFile.is_complete()) pathConfigFile = GetDataDir(false) / pathConfigFile;
     return pathConfigFile;
 }
@@ -1046,14 +1046,14 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
 {
     boost::filesystem::ifstream streamConfig(GetConfigFile());
     if (!streamConfig.good())
-        return; // No Junkcoin.conf file is OK
+        return; // No SquidCoin.conf file is OK
 
     set<string> setOptions;
     setOptions.insert("*");
 
     for (boost::program_options::detail::config_file_iterator it(streamConfig, setOptions), end; it != end; ++it)
     {
-        // Don't overwrite existing settings so command line settings override junkcoin.conf
+        // Don't overwrite existing settings so command line settings override squidcoin.conf
         string strKey = string("-") + it->string_key;
         if (mapSettingsRet.count(strKey) == 0)
         {
@@ -1067,7 +1067,7 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
 
 boost::filesystem::path GetPidFile()
 {
-    boost::filesystem::path pathPidFile(GetArg("-pid", "junkcoind.pid"));
+    boost::filesystem::path pathPidFile(GetArg("-pid", "squidcoind.pid"));
     if (!pathPidFile.is_complete()) pathPidFile = GetDataDir() / pathPidFile;
     return pathPidFile;
 }
@@ -1187,7 +1187,7 @@ void AddTimeData(const CNetAddr& ip, int64 nTime)
         int64 nMedian = vTimeOffsets.median();
         std::vector<int64> vSorted = vTimeOffsets.sorted();
         // Only let other nodes change our time by so much
-        if (abs64(nMedian) < 35 * 60) // Junkcoin: changed maximum adjust to 35 mins to avoid letting peers change our time too much in case of an attack.
+        if (abs64(nMedian) < 35 * 60) // SquidCoin: changed maximum adjust to 35 mins to avoid letting peers change our time too much in case of an attack.
         {
             nTimeOffset = nMedian;
         }
@@ -1210,7 +1210,7 @@ void AddTimeData(const CNetAddr& ip, int64 nTime)
                     string strMessage = _("Warning: Please check that your computer's date and time are correct.  If your clock is wrong Linkcoin will not work properly.");
                     strMiscWarning = strMessage;
                     printf("*** %s\n", strMessage.c_str());
-                    uiInterface.ThreadSafeMessageBox(strMessage+" ", string("JKC"), CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION);
+                    uiInterface.ThreadSafeMessageBox(strMessage+" ", string("SQC"), CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION);
                 }
             }
         }

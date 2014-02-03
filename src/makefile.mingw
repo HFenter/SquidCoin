@@ -9,7 +9,7 @@ INCLUDEPATHS= \
  -I"c:/deps/db-4.8.30.NC/build_unix" \
  -I"c:/deps/openssl-1.0.1f/include" \
  -I"c" \
- -I"c/JunkCoin/src"
+ -I"d:/Development/SquidCoin/src"
 
 LIBPATHS= \
  -L"c:/deps/boost_1_55_0/stage/lib" \
@@ -75,7 +75,7 @@ OBJS= \
     obj/noui.o
 
 
-all: junkcoind.exe
+all: squidcoind.exe
 
 obj/scrypt.o: scrypt.c
 	gcc -c $(CFLAGS) -o $@ $^
@@ -83,7 +83,7 @@ obj/scrypt.o: scrypt.c
 obj/%.o: %.cpp $(HEADERS)
 	g++ -c $(CFLAGS) -o $@ $<
 
-junkcoind.exe: $(OBJS:obj/%=obj/%)
+squidcoind.exe: $(OBJS:obj/%=obj/%)
 	g++ $(CFLAGS) -o $@ $(LIBPATHS) $^ $(LIBS)
 
 TESTOBJS := $(patsubst test/%.cpp,obj-test/%.o,$(wildcard test/*.cpp))
@@ -91,11 +91,11 @@ TESTOBJS := $(patsubst test/%.cpp,obj-test/%.o,$(wildcard test/*.cpp))
 obj-test/%.o: test/%.cpp $(HEADERS)
 	g++ -c $(TESTDEFS) $(CFLAGS) -o $@ $<
 
-test_junkcoin.exe: $(TESTOBJS) $(filter-out obj/init.o,$(OBJS:obj/%=obj/%))
+test_squidcoin.exe: $(TESTOBJS) $(filter-out obj/init.o,$(OBJS:obj/%=obj/%))
 	g++ $(CFLAGS) -o $@ $(LIBPATHS) $^ -lboost_unit_test_framework-mgw45-mt-d-1_53 $(LIBS)
 
 clean:
-	rm -f junkcoind.exe test_junkcoin.exe
+	rm -f squidcoind.exe test_squidcoin.exe
 	rm -f obj/*.o
 	rm -f obj-test/*.o
 	rm -f build.h

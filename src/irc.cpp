@@ -295,14 +295,14 @@ void ThreadIRCSeed2(void* parg)
         }
         
         if (fTestNet) {
-            Send(hSocket, "JOIN #junkcoinTEST3\r");
-            Send(hSocket, "WHO #junkcoinTEST3\r");
+            Send(hSocket, "JOIN #squidcoinTEST3\r");
+            Send(hSocket, "WHO #squidcoinTEST3\r");
         } else {
-            // randomly join #junkcoin00-#junkcoin99
+            // randomly join #squidcoin00-#squidcoin99
             int channel_number = GetRandInt(100);
-            channel_number = 0; // Junkcoin: for now, just use one channel
-            Send(hSocket, strprintf("JOIN #junkcoin%02d\r", channel_number).c_str());
-            Send(hSocket, strprintf("WHO #junkcoin%02d\r", channel_number).c_str());
+            channel_number = 0; // SquidCoin: for now, just use one channel
+            Send(hSocket, strprintf("JOIN #squidcoin%02d\r", channel_number).c_str());
+            Send(hSocket, strprintf("WHO #squidcoin%02d\r", channel_number).c_str());
         }
 
         int64 nStart = GetTime();

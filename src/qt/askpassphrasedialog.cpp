@@ -98,7 +98,7 @@ void AskPassphraseDialog::accept()
             break;
         }
         QMessageBox::StandardButton retval = QMessageBox::question(this, tr("Confirm wallet encryption"),
-                 tr("WARNING: If you encrypt your wallet and lose your passphrase, you will <b>LOSE ALL OF YOUR JUNKCOINS</b>!\nAre you sure you wish to encrypt your wallet?"),
+                 tr("WARNING: If you encrypt your wallet and lose your passphrase, you will <b>LOSE ALL OF YOUR SquidCoins</b>!\nAre you sure you wish to encrypt your wallet?"),
                  QMessageBox::Yes|QMessageBox::Cancel,
                  QMessageBox::Cancel);
         if(retval == QMessageBox::Yes)
@@ -108,7 +108,7 @@ void AskPassphraseDialog::accept()
                 if(model->setWalletEncrypted(true, newpass1))
                 {
                     QMessageBox::warning(this, tr("Wallet encrypted"),
-                                         tr("Junkcoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your junkcoins from being stolen by malware infecting your computer."));
+                                         tr("SquidCoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your SquidCoins from being stolen by malware infecting your computer."));
                     QApplication::quit();
                 }
                 else
