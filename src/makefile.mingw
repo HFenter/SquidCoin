@@ -15,7 +15,7 @@ LIBPATHS= \
  -L"c:/deps/boost_1_55_0/stage/lib" \
  -L"c:/deps/db-4.8.30.NC/build_unix" \
  -L"c:/deps/openssl-1.0.1f" \
- -L"c:/deps/miniupnpc-1.8"
+ -L"c:/deps/miniupnpc"
 
 
 LIBS= \
@@ -92,7 +92,7 @@ obj-test/%.o: test/%.cpp $(HEADERS)
 	g++ -c $(TESTDEFS) $(CFLAGS) -o $@ $<
 
 test_squidcoin.exe: $(TESTOBJS) $(filter-out obj/init.o,$(OBJS:obj/%=obj/%))
-	g++ $(CFLAGS) -o $@ $(LIBPATHS) $^ -lboost_unit_test_framework-mgw45-mt-d-1_53 $(LIBS)
+	g++ $(CFLAGS) -o $@ $(LIBPATHS) $^ -lboost_unit_test_framework-mgw48-mt-s-1_55 $(LIBS)
 
 clean:
 	rm -f squidcoind.exe test_squidcoin.exe
