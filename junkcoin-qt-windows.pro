@@ -1,32 +1,23 @@
-
 TEMPLATE = app
-TARGET =
+TARGET = junkcoin
 VERSION = 0.6.3
 INCLUDEPATH += src src/json src/qt
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE USE_IPV6
 CONFIG += no_include_pwd
 
-# for boost 1.37, add -mt to the boost libraries
-# use: qmake BOOST_LIB_SUFFIX=-mt
-# for boost thread win32 with _win32 sufix
-# use: BOOST_THREAD_LIB_SUFFIX=_win32-...
-# or when linking against a specific BerkelyDB version: BDB_LIB_SUFFIX=-4.8
+BOOST_LIB_SUFFIX=-mgw48-mt-s-1_55
+BOOST_INCLUDE_PATH=C:/deps/boost_1_55_0
+BOOST_LIB_PATH=C:/deps/boost_1_55_0/stage/lib
+BDB_INCLUDE_PATH=C:/deps/db-4.8.30.NC/build_unix
+BDB_LIB_PATH=C:/deps/db-4.8.30.NC/build_unix
+OPENSSL_INCLUDE_PATH=C:/deps/openssl-1.0.1f/include
+OPENSSL_LIB_PATH=C:/deps/openssl-1.0.1f
+MINIUPNPC_INCLUDE_PATH=C:/deps/
+MINIUPNPC_LIB_PATH=C:/deps/miniupnpc
 
-# Dependency library locations can be customized with:
-#    BOOST_INCLUDE_PATH, BOOST_LIB_PATH, BDB_INCLUDE_PATH,
-#    BDB_LIB_PATH, OPENSSL_INCLUDE_PATH and OPENSSL_LIB_PATH respectively
-# Change following your build environment
-# I am using mingw to build
 
-BOOST_LIB_SUFFIX=-mgw45-mt-d-1_53
-BOOST_INCLUDE_PATH=E:\boost_1_53_0
-BOOST_LIB_PATH=E:\boost_1_53_0\stage\lib
-BDB_INCLUDE_PATH=E:/db-4.8.30.NC/build_unix
-BDB_LIB_PATH=E:/db-4.8.30.NC/build_unix
-OPENSSL_INCLUDE_PATH=E:/openssl-1.0.1e/include
-OPENSSL_LIB_PATH=E:/openssl-1.0.1e
-MINIUPNPC_INCLUDE_PATH=E:\
-MINIUPNPC_LIB_PATH=E:/upnpc-exe-win32
+
 
 OBJECTS_DIR = build
 MOC_DIR = build
@@ -361,8 +352,8 @@ LIBS += $$join(BOOST_LIB_PATH,,-L,) $$join(BDB_LIB_PATH,,-L,) $$join(OPENSSL_LIB
 LIBS += -lssl -lcrypto -ldb_cxx$$BDB_LIB_SUFFIX -loleaut32
 # -lgdi32 has to happen after -lcrypto (see  #681)
 windows:LIBS += -lole32 -luuid -lgdi32 
-LIBS += E:\MinGW\lib\libws2_32.a
-LIBS += E:\MinGW\lib\liboleaut32.a
+LIBS += C:\MinGW\lib\libws2_32.a
+LIBS += C:\MinGW\lib\liboleaut32.a
 LIBS += -lboost_system$$BOOST_LIB_SUFFIX -lboost_filesystem$$BOOST_LIB_SUFFIX -lboost_program_options$$BOOST_LIB_SUFFIX -lboost_thread$$BOOST_THREAD_LIB_SUFFIX
 
 contains(RELEASE, 1) {

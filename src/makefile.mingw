@@ -2,26 +2,27 @@
 # Distributed under the MIT/X11 software license, see the accompanying
 # file license.txt or http://www.opensource.org/licenses/mit-license.php.
 
-USE_UPNP:=0
+USE_UPNP:=
 
 INCLUDEPATHS= \
- -I"/e/boost_1_53_0" \
- -I"/e/db-4.8.30.NC/build_unix" \
- -I"/e/openssl-1.0.1e/include" \
- -I"/e" \
- -I"/c/Projects/testcoin/src"
+ -I"c:/deps/boost_1_55_0" \
+ -I"c:/deps/db-4.8.30.NC/build_unix" \
+ -I"c:/deps/openssl-1.0.1f/include" \
+ -I"c" \
+ -I"c/JunkCoin/src"
 
 LIBPATHS= \
- -L"/e/boost_1_53_0/stage/lib" \
- -L"/e/db-4.8.30.NC/build_unix" \
- -L"/e/openssl-1.0.1e" \
- -L"/e/upnpc-exe-win32"
+ -L"c:/deps/boost_1_55_0/stage/lib" \
+ -L"c:/deps/db-4.8.30.NC/build_unix" \
+ -L"c:/deps/openssl-1.0.1f" \
+ -L"c:/deps/miniupnpc-1.8"
+
 
 LIBS= \
- -l boost_system-mgw45-mt-d-1_53 \
- -l boost_filesystem-mgw45-mt-d-1_53 \
- -l boost_program_options-mgw45-mt-d-1_53 \
- -l boost_thread-mgw45-mt-d-1_53 \
+ -l boost_system-mgw48-mt-s-1_55 \
+ -l boost_filesystem-mgw48-mt-s-1_55 \
+ -l boost_program_options-mgw48-mt-s-1_55 \
+ -l boost_thread-mgw48-mt-s-1_55 \
  -l db_cxx \
  -l ssl \
  -l crypto
@@ -29,6 +30,9 @@ LIBS= \
 DEFS=-DWIN32 -D_WINDOWS -DBOOST_THREAD_USE_LIB -DBOOST_SPIRIT_THREADSAFE -DUSE_IPV6 -D__NO_SYSTEM_INCLUDES
 DEBUGFLAGS=-g
 CFLAGS=-mthreads -O2 -w -Wall -Wextra -Wformat -Wformat-security -Wno-unused-parameter $(DEBUGFLAGS) $(DEFS) $(INCLUDEPATHS)
+
+-LDFLAGS=-Wl,--dynamicbase -Wl,--nxcompat -Wl,--large-address-aware
++LDFLAGS=-Wl,--dynamicbase -Wl,--nxcompat -Wl,--large-address-aware -static
 
 TESTDEFS = -DTEST_DATA_DIR=$(abspath test/data)
 
