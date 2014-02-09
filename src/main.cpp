@@ -1219,7 +1219,7 @@ bool CTransaction::ConnectInputs(MapPrevTx inputs,
 {
     // Take over previous transactions' spent pointers
     // fBlock is true when this is called from AcceptBlock when a new best-block is added to the blockchain
-    // fMiner is true when called from the internal sqc miner
+    // fMiner is true when called from the internal SQC miner
     // ... both are false when called from CTransaction::AcceptToMemoryPool
     if (!IsCoinBase())
     {
@@ -2022,7 +2022,7 @@ bool LoadBlockIndex(bool fAllowNew)
         pchMessageStart[1] = 0xc1;
         pchMessageStart[2] = 0xb7;
         pchMessageStart[3] = 0xdc;
-        hashGenesisBlock = uint256("0x79db75685f274bdf110ce313242062105444a8c2de83f9411edb06ab71d2dce1");
+        hashGenesisBlock = uint256("0x5e490586952c2cd40ae03863d4697d0d9479cca27b8620a42111dcd38e36cc80");
     }
 
     //
@@ -2045,15 +2045,15 @@ bool LoadBlockIndex(bool fAllowNew)
 		// block.GetHash() = a2effa738145e377e08a61d76179c21703e13e48910b30a2a87f0dfe794b64c6
 		// hashGenesisBlock = a2effa738145e377e08a61d76179c21703e13e48910b30a2a87f0dfe794b64c6
 		// block.hashMerkleRoot = 3de124b0274307911fe12550e96bf76cb92c12835db6cb19f82658b8aca1dbc8
-		// CBlock(hash=a2effa738145e377e08a, PoW=f0bb8fb675fe7c363136, ver=1, hashPrevBlock=00000000000000000000, 
+		// CBlock(hash=a2effa738145e377e08a, PoW=f0bb8fb675fe7c363136, ver=1, hashPrevBlock=00000000000000000000,
 		//     hashMerkleRoot=3de124b027, nTime=1367394064, nBits=1e0ffff0, nNonce=112158625, vtx=1)
 		//   CTransaction(hash=3de124b027, ver=1, vin.size=1, vout.size=1, nLockTime=0)
 		//     CTxIn(COutPoint(0000000000, -1), coinbase 04ffff001d01044c5d576564204d617920312c20323031333a2053706f7420676f6c642066656c6c20312e332070657263656e7420746f2024312c3435372e393020616e206f756e636520627920333a313120702e6d2e2045445420283139313120474d5429)
 		//     CTxOut(nValue=50.00000000, scriptPubKey=040184710fa689ad5023690c80f3a4)
-		//   vMerkleTree: 3de124b027 
+		//   vMerkleTree: 3de124b027
 
         // Genesis block
-        const char* pszTimestamp = "Monday Feb 3, 2014: China Failed to dump BTC as expected 2 days earlier on the Lunar New Year.";
+        const char* pszTimestamp = "Sunday Feb 9, 2014: Bitcoin was trading at $676.65987 on Gox 3:41 p.m. CST";
         CTransaction txNew;
         txNew.vin.resize(1);
         txNew.vout.resize(1);
@@ -2065,21 +2065,21 @@ bool LoadBlockIndex(bool fAllowNew)
         block.hashPrevBlock = 0;
         block.hashMerkleRoot = block.BuildMerkleTree();
         block.nVersion = 1;
-        block.nTime    = 1391467186;
+        block.nTime    = 1391982009;
         block.nBits    = 0x1e0ffff0;
-        block.nNonce   = 112158625;
+        block.nNonce   = 0;
 
         if (fTestNet)
         {
-            block.nTime    = 1391467186;
-            block.nNonce   = 109003952;
+            block.nTime    = 1391982009;
+            block.nNonce   = 333109;
         }
 
         //// debug print
         printf("block.GetHash() = %s\n", block.GetHash().ToString().c_str());
         printf("hashGenesisBlock = %s\n", hashGenesisBlock.ToString().c_str());
         printf("block.hashMerkleRoot = %s\n", block.hashMerkleRoot.ToString().c_str());
-        assert(block.hashMerkleRoot == uint256("0x02722e7e106b7906b1c4f5159ef0cbc389602a8a7b315ceae84c269684f8ff0c"));
+        assert(block.hashMerkleRoot == uint256("0xfd50916870a87b9cd24bd2b08530f8cea73f1bfa5d57a7f782c7f80f9a0ac35e"));
 
         // If genesis block hash does not match, then generate new genesis hash.
         if (true && block.GetHash() != hashGenesisBlock)

@@ -293,10 +293,10 @@ void ThreadIRCSeed2(void* parg)
                 Send(hSocket, strprintf("NICK %s\r", strMyName.c_str()).c_str());
             }
         }
-        
+
         if (fTestNet) {
-            Send(hSocket, "JOIN #squidcoinTEST3\r");
-            Send(hSocket, "WHO #squidcoinTEST3\r");
+            Send(hSocket, "JOIN #squidcoinTEST5\r");
+            Send(hSocket, "WHO #squidcoinTEST5\r");
         } else {
             // randomly join #squidcoin00-#squidcoin99
             int channel_number = GetRandInt(100);

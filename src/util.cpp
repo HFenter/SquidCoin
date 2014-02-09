@@ -973,13 +973,13 @@ void PrintExceptionContinue(std::exception* pex, const char* pszThread)
 boost::filesystem::path GetDefaultDataDir()
 {
     namespace fs = boost::filesystem;
-    // Windows < Vista: C:\Documents and Settings\Username\Application Data\SquidCoin
-    // Windows >= Vista: C:\Users\Username\AppData\Roaming\SquidCoin
-    // Mac: ~/Library/Application Support/SquidCoin
-    // Unix: ~/.SquidCoin
+    // Windows < Vista: C:\Documents and Settings\Username\Application Data\Squidcoin
+    // Windows >= Vista: C:\Users\Username\AppData\Roaming\Squidcoin
+    // Mac: ~/Library/Application Support/Squidcoin
+    // Unix: ~/.squidcoin
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "SquidCoin";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "Squidcoin";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -991,7 +991,7 @@ boost::filesystem::path GetDefaultDataDir()
     // Mac
     pathRet /= "Library/Application Support";
     fs::create_directory(pathRet);
-    return pathRet / "SquidCoin";
+    return pathRet / "Squidcoin";
 #else
     // Unix
     return pathRet / ".squidcoin";
@@ -1026,7 +1026,7 @@ const boost::filesystem::path &GetDataDir(bool fNetSpecific)
         path = GetDefaultDataDir();
     }
     if (fNetSpecific && GetBoolArg("-testnet", false))
-        path /= "testnet3";
+        path /= "testnet5";
 
     fs::create_directory(path);
 
@@ -1046,7 +1046,7 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
 {
     boost::filesystem::ifstream streamConfig(GetConfigFile());
     if (!streamConfig.good())
-        return; // No SquidCoin.conf file is OK
+        return; // No Squidcoin.conf file is OK
 
     set<string> setOptions;
     setOptions.insert("*");

@@ -136,7 +136,7 @@ bool AppInit(int argc, char* argv[])
         if (mapArgs.count("-?") || mapArgs.count("--help"))
         {
             // First part of help message is specific to squidcoind / RPC client
-            std::string strUsage = _("SquidCoin version") + " " + FormatFullVersion() + "\n\n" +
+            std::string strUsage = _("SQC version") + " " + FormatFullVersion() + "\n\n" +
                 _("Usage:") + "\n" +
                   "  squidcoind [options]                     " + "\n" +
                   "  squidcoind [options] <command> [params]  " + _("Send command to -server or squidcoind") + "\n" +
@@ -177,7 +177,7 @@ int main(int argc, char* argv[])
 {
     bool fRet = false;
 
-    // Connect squidcoind signal handlers
+    // Connect junkcoind signal handlers
     noui_connect();
 
     fRet = AppInit(argc, argv);
@@ -230,7 +230,7 @@ std::string HelpMessage()
         "  -socks=<n>             " + _("Select the version of socks proxy to use (4-5, default: 5)") + "\n" +
         "  -tor=<ip:port>         " + _("Use proxy to reach tor hidden services (default: same as -proxy)") + "\n"
         "  -dns                   " + _("Allow DNS lookups for -addnode, -seednode and -connect") + "\n" +
-        "  -port=<port>           " + _("Listen for connections on <port> (default: 96669 or testnet: 96670)") + "\n" +
+        "  -port=<port>           " + _("Listen for connections on <port> (default: 9771 or testnet: 19771)") + "\n" +
         "  -maxconnections=<n>    " + _("Maintain at most <n> connections to peers (default: 125)") + "\n" +
         "  -addnode=<ip>          " + _("Add a node to connect to and attempt to keep the connection open") + "\n" +
         "  -connect=<ip>          " + _("Connect only to the specified node(s)") + "\n" +
@@ -272,7 +272,7 @@ std::string HelpMessage()
 #endif
         "  -rpcuser=<user>        " + _("Username for JSON-RPC connections") + "\n" +
         "  -rpcpassword=<pw>      " + _("Password for JSON-RPC connections") + "\n" +
-        "  -rpcport=<port>        " + _("Listen for JSON-RPC connections on <port> (default: 96669)") + "\n" +
+        "  -rpcport=<port>        " + _("Listen for JSON-RPC connections on <port> (default: 9772)") + "\n" +
         "  -rpcallowip=<ip>       " + _("Allow JSON-RPC connections from specified IP address") + "\n" +
         "  -rpcconnect=<ip>       " + _("Send commands to node running on <ip> (default: 127.0.0.1)") + "\n" +
         "  -blocknotify=<cmd>     " + _("Execute command when the best block changes (%s in cmd is replaced by block hash)") + "\n" +
@@ -294,7 +294,7 @@ std::string HelpMessage()
     return strUsage;
 }
 
-/** Initialize sqc.
+/** Initialize SQC.
  *  @pre Parameters should be parsed and config file should be read.
  */
 bool AppInit2()
@@ -332,7 +332,7 @@ bool AppInit2()
     // ********************************************************* Step 2: parameter interactions
 
     fTestNet = GetBoolArg("-testnet");
-    // squidcoin: Keep irc seeding on by default for now.
+    // Squidcoin: Keep irc seeding on by default for now.
 //    if (fTestNet)
 //    {
         SoftSetBoolArg("-irc", true);
@@ -347,7 +347,9 @@ bool AppInit2()
     if (mapArgs.count("-connect")) {
         // when only connecting to trusted nodes, do not seed via DNS, or listen by default
         SoftSetBoolArg("-dnsseed", false);
-        SoftSetBoolArg("-listen", false);
+        // commenting this out, we still need to open a port and listen, or we'll
+        // get the "socket select error 10022" on windows (probably a better fix for this)
+        //SoftSetBoolArg("-listen", false);
     }
 
     if (mapArgs.count("-proxy")) {
@@ -433,7 +435,7 @@ bool AppInit2()
     if (file) fclose(file);
     static boost::interprocess::file_lock lock(pathLockFile.string().c_str());
     if (!lock.try_lock())
-        return InitError(strprintf(_("Cannot obtain a lock on data directory %s.  SquidCoin is probably already running."), GetDataDir().string().c_str()));
+        return InitError(strprintf(_("Cannot obtain a lock on data directory %s.  SQC is probably already running."), GetDataDir().string().c_str()));
 
 #if !defined(WIN32) && !defined(QT_GUI)
     if (fDaemon)
@@ -460,14 +462,14 @@ bool AppInit2()
     if (!fDebug)
         ShrinkDebugFile();
     printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-    printf("SquidCoin version %s (%s)\n", FormatFullVersion().c_str(), CLIENT_DATE.c_str());
+    printf("SQC version %s (%s)\n", FormatFullVersion().c_str(), CLIENT_DATE.c_str());
     printf("Startup time: %s\n", DateTimeStrFormat("%x %H:%M:%S", GetTime()).c_str());
     printf("Default data directory %s\n", GetDefaultDataDir().string().c_str());
     printf("Used data directory %s\n", GetDataDir().string().c_str());
     std::ostringstream strErrors;
 
     if (fDaemon)
-        fprintf(stdout, "SquidCoin server starting\n");
+        fprintf(stdout, "SQC server starting\n");
 
     int64 nStart;
 
@@ -536,7 +538,8 @@ bool AppInit2()
     bool fBound = false;
     if (!fNoListen)
     {
-        std::string strError;
+        printf("\n\nTESTBACKTRACE\n");
+		std::string strError;
         if (mapArgs.count("-bind")) {
             BOOST_FOREACH(std::string strBind, mapMultiArgs["-bind"]) {
                 CService addrBind;
